@@ -1,11 +1,13 @@
 #!/usr/bin/env php
-
-#!/usr/bin/env php
 <?php
-// TEMP: éviter que les dépréciations PHP 8.1 fassent planter Laravel 7 en CLI
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+if (PHP_VERSION_ID >= 80100) {
+    error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+}
 
 define('LARAVEL_START', microtime(true));
+require __DIR__.'/vendor/autoload.php';
+$app = require_once __DIR__.'/bootstrap/app.php';
+
 
 /*
 |--------------------------------------------------------------------------

@@ -1,14 +1,12 @@
 <?php
-// TEMP: éviter que les dépréciations PHP 8.1 fassent planter Laravel 7 en FPM
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
-/**
- * Laravel - A PHP Framework For Web Artisans
- *
- * @package  Laravel
- * @author   Taylor Otwell <taylor@laravel.com>
- */
+if (PHP_VERSION_ID >= 80100) {
+    error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+}
 
 define('LARAVEL_START', microtime(true));
+require __DIR__.'/../vendor/autoload.php';
+$app = require_once __DIR__.'/../bootstrap/app.php';
+    
 
 /*
 |--------------------------------------------------------------------------
