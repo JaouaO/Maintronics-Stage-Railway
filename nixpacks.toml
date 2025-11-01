@@ -1,8 +1,5 @@
 [phases.install]
-cmds = [
-  "composer install --no-dev --prefer-dist --no-progress --no-scripts",
-  "npm ci"
-]
+cmds = ["chmod +x .nixpacks/assets/boot.sh"]
 
-[phases.build]
-cmds = ["npm run prod"]
+[start]
+cmd = "/assets/boot.sh"
