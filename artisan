@@ -1,5 +1,9 @@
 #!/usr/bin/env php
+
+#!/usr/bin/env php
 <?php
+// TEMP: éviter que les dépréciations PHP 8.1 fassent planter Laravel 7 en CLI
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 
 define('LARAVEL_START', microtime(true));
 

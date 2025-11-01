@@ -1,5 +1,6 @@
 <?php
-
+// TEMP: éviter que les dépréciations PHP 8.1 fassent planter Laravel 7 en FPM
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
