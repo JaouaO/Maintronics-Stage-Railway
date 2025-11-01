@@ -6,7 +6,7 @@ if (PHP_VERSION_ID >= 80100) {
 define('LARAVEL_START', microtime(true));
 require __DIR__.'/../vendor/autoload.php';
 $app = require_once __DIR__.'/../bootstrap/app.php';
-    
+
 
 /*
 |--------------------------------------------------------------------------
