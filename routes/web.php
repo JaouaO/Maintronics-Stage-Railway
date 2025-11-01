@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => redirect()->route('authentification'));
 
+Route::get('/health', fn() => response('ok', 200));
+
 // Auth
 Route::get('/authentification', [MainController::class, 'showLoginForm'])
     ->name('authentification')

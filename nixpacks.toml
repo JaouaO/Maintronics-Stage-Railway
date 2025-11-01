@@ -1,5 +1,19 @@
+# On garde notre boot custom, mais on RESTAURE les installs utiles
 [phases.install]
-cmds = ["chmod +x .nixpacks/assets/boot.sh"]
+cmds = [
+  # PHP deps (prod)
+  "composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --ignore-platform-reqs",
+  # Node deps si package.json existe
+  "if [ -f package.json ]; then npm ci; else echo 'No package.json, skip npm ci'; fi",
+  # Rendre exécutable le boot copié dans /assets
+  "chmod +x /assets/boot.sh"
+]
+
+[phases.build]
+cmds = [
+  # Build assets uniquement si package.json existe, et avec fallback:
+  "if [ -f package.json ]; then (npm run prod || npm run production || echo 'No prod script, skip build'); else echo 'No package.json, skip build'; fi"
+]
 
 [start]
 cmd = "/assets/boot.sh"
