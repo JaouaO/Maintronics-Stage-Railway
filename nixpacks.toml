@@ -1,18 +1,17 @@
+[environment]
+COMPOSER_ALLOW_SUPERUSER = "1"
+
 [phases.install]
 cmds = [
-  # PHP
-  "composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --ignore-platform-reqs",
-
-  # NODE: installe AUSSI les devDeps même si NODE_ENV=production
+  # IMPORTANT : --no-scripts pour ne PAS lancer artisan durant le build
+  "composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --ignore-platform-reqs --no-scripts",
+  # Assets front (devDeps incluses)
   "if [ -f package.json ]; then NPM_CONFIG_PRODUCTION=false npm ci; else echo 'No package.json, skip npm ci'; fi",
-
-  # Boot script rendu exécutable
-  "chmod +x /assets/boot.sh"
+  "chmod -R +x /assets || true"
 ]
 
 [phases.build]
 cmds = [
-  # Build assets si package.json présent (accepte prod OU production)
   "if [ -f package.json ]; then (npm run prod || npm run production || echo 'No prod script; skip build'); else echo 'No package.json; skip build'; fi"
 ]
 
