@@ -1,18 +1,19 @@
-# On garde notre boot custom, mais on RESTAURE les installs utiles
 [phases.install]
 cmds = [
-  # PHP deps (prod)
+  # PHP
   "composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist --ignore-platform-reqs",
-  # Node deps si package.json existe
-  "if [ -f package.json ]; then npm ci; else echo 'No package.json, skip npm ci'; fi",
-  # Rendre exécutable le boot copié dans /assets
+
+  # NODE: installe AUSSI les devDeps même si NODE_ENV=production
+  "if [ -f package.json ]; then NPM_CONFIG_PRODUCTION=false npm ci; else echo 'No package.json, skip npm ci'; fi",
+
+  # Boot script rendu exécutable
   "chmod +x /assets/boot.sh"
 ]
 
 [phases.build]
 cmds = [
-  # Build assets uniquement si package.json existe, et avec fallback:
-  "if [ -f package.json ]; then (npm run prod || npm run production || echo 'No prod script, skip build'); else echo 'No package.json, skip build'; fi"
+  # Build assets si package.json présent (accepte prod OU production)
+  "if [ -f package.json ]; then (npm run prod || npm run production || echo 'No prod script; skip build'); else echo 'No package.json; skip build'; fi"
 ]
 
 [start]
