@@ -1,0 +1,11 @@
+{
+    "build": {
+        "builder": "nixpacks",
+        "buildCommand": "composer install --no-dev --optimize-autoloader"
+    },
+    "deploy": {
+        "startCommand": "php artisan optimize && vendor/bin/heroku-php-nginx public/",
+        "healthcheckPath": "/",
+        "healthcheckTimeout": 300
+    }
+}
